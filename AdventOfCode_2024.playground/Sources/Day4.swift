@@ -39,4 +39,45 @@ public struct Day4 {
         }
         return vertical
     }
+    
+    public static func part2() {
+        let text = Bundle.main.getInput(file: "input_day4")?.trimmingCharacters(in: .whitespaces)
+        let lines = text!.split(separator: "\n").map{ Array($0) }
+        
+        var counter = 0
+        for i in 1..<(lines.count - 1){
+            let indexesOfA = lines[i].enumerated().compactMap{
+                $0.element == "A" ? $0.offset : nil
+            }
+            
+            for index in indexesOfA{
+                if index > 0 && index < lines[i].count - 1{
+                    let prevLine = lines[i-1]
+                    let nextLine = lines[i+1]
+                    if prevLine[index-1] == "M" && prevLine[index+1] == "S"
+                        && nextLine[index-1] == "M" && nextLine[index+1] == "S"
+                    {
+                        counter += 1
+                    }
+                    else if prevLine[index-1] == "S" && prevLine[index+1] == "M"
+                                && nextLine[index-1] == "S" && nextLine[index+1] == "M"
+                    {
+                        counter += 1
+                    }
+                    else if prevLine[index-1] == "S" && prevLine[index+1] == "S"
+                                && nextLine[index-1] == "M" && nextLine[index+1] == "M"
+                    {
+                        counter += 1
+                    }
+                    else if prevLine[index-1] == "M" && prevLine[index+1] == "M"
+                                && nextLine[index-1] == "S" && nextLine[index+1] == "S"
+                    {
+                        counter += 1
+                    }
+                }
+            }
+        }
+        
+        print(counter)
+    }
 }
