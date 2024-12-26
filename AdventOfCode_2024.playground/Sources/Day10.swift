@@ -45,6 +45,53 @@ public struct Day10 {
         print(result)
     }
     
+    public static func part2() {
+        let text = Bundle.main.getInput(file: "input_day10")?.trimmingCharacters(in: .whitespaces)
+        let lines = text!.split(separator: "\n")
+            .map{ String($0).split(separator: "").map({ Int($0)! }) }
+        
+        var score = [Point : Int]()
+        
+        var zeros = [Point]()
+        for (index, line) in lines.enumerated(){
+            let z = line.enumerated().compactMap {
+                if ( $0.element == 0) {
+                    return Point(x: index, y: $0.offset)
+                }
+                return nil
+            }
+            zeros.append(contentsOf: z)
+        }
+        
+        for start in zeros{
+            var points = [start]
+            var rating = [Point : Int]()
+            
+            while( !points.isEmpty ){
+                if let last = points.last{
+                    points.removeLast()
+                    let moved = move(point: last, lines: lines)
+                    let end = moved.filter{ lines[$0.x][$0.y] == 9 }
+                    if end.count > 0 {
+                        for e in end{
+                            rating[e, default: 0] += 1
+                        }
+                    }
+                    points.append(contentsOf: moved)
+                }
+            }
+            score[start, default: 0] = rating.map { (key: Point, value: Int) in
+                return value
+            }.reduce(0, +)
+        }
+        
+        let result = score.map { (key: Point, value: Int) in
+            return value
+        }.reduce(0, +)
+        
+        print(result)
+    }
+    
     static func move(point:Point, lines:[[Int]]) -> [Point] {
         var points = [Point]()
         if var value = lines[safe: point.x]?[safe: point.y] {
