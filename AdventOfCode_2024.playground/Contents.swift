@@ -30,4 +30,5 @@ import Foundation
 //Day10.part1()
 //Day10.part2()
 
-Day11.part1()
+//Day11.part1()
+Day11.part2()
