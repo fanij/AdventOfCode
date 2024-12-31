@@ -2,39 +2,7 @@ import Foundation
 
 public struct Day8 {
     
-    class Point: NSObject{
-        var x:Int
-        var y:Int
-        
-        init(x: Int, y: Int) {
-            self.x = x
-            self.y = y
-        }
-        
-        func moveBy(_ other: Point) -> Point{
-            let difx = self.x - other.x
-            let dify = self.y - other.y
-            return Point(x: self.x + difx, y: self.y + dify)
-        }
-        
-        override func isEqual(_ object: Any?) -> Bool {
-            if let other = object as? Point {
-                return self.x == other.x && self.y == other.y
-            } else {
-                return false
-            }
-        }
-        
-        override var hash: Int {
-            return "\(self.x) - \(self.y)".hashValue
-        }
-        
-        override var description: String{
-            return "(\(x),\(y))"
-        }
-    }
-    
-    public static func part1() {
+    public static func part1() -> Int {
         let text = Bundle.main.getInput(file: "input_day8")?.trimmingCharacters(in: .whitespaces)
         let lines = text!.split(separator: "\n").map{ String($0) }
         
@@ -72,10 +40,10 @@ public struct Day8 {
             }
         }
         
-        print(antinodes.count)
+        return antinodes.count
     }
     
-    public static func part2() {
+    public static func part2() -> Int {
         let text = Bundle.main.getInput(file: "input_day8")?.trimmingCharacters(in: .whitespaces)
         let lines = text!.split(separator: "\n").map{ String($0) }
         
@@ -133,7 +101,7 @@ public struct Day8 {
             }
         }
         
-        print(antinodes.count)
+        return antinodes.count
     }
     
     static func createAntinode(p1:Point, p2:Point, maxX:Int, maxY:Int, antenas:[Character : [Point]]) -> Point?{
@@ -144,5 +112,13 @@ public struct Day8 {
             }
         }
         return nil
+    }
+}
+
+extension Point{
+    func moveBy(_ other: Point) -> Point{
+        let difx = self.x - other.x
+        let dify = self.y - other.y
+        return Point(x: self.x + difx, y: self.y + dify)
     }
 }

@@ -2,7 +2,7 @@ import Foundation
 
 public struct Day5 {
 
-    public static func part1() {
+    public static func part1() -> Int{
         let text = Bundle.main.getInput(file: "input_day5")?.trimmingCharacters(in: .whitespaces)
         let lines = text!.split(separator: "\n")
         
@@ -44,10 +44,10 @@ public struct Day5 {
             counter += pages[safe: pages.count/2] ?? 0
         }
         
-        print("counter: \(counter)")
+        return counter
     }
     
-    public static func part2() {
+    public static func part2() -> Int{
         let text = Bundle.main.getInput(file: "input_day5")?.trimmingCharacters(in: .whitespaces)
         let lines = text!.split(separator: "\n")
         
@@ -101,6 +101,6 @@ public struct Day5 {
             sum += sorted[safe: sorted.count/2] ?? 0
         }
         
-        print("sum: \(sum)")
+        return sum
     }
 }

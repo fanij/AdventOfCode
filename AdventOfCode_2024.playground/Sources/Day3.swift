@@ -2,7 +2,7 @@ import Foundation
 
 public struct Day3 {
 
-    public static func part1() {
+    public static func part1() -> Int{
         let text = Bundle.main.getInput(file: "input_day3")?.trimmingCharacters(in: .whitespaces)
         
         let matches = text!.matches(of: /(mul\()(\d{1,3})(,)(\d{1,3})(\))/ )
@@ -11,10 +11,10 @@ public struct Day3 {
         }
         .reduce(0, +)
             
-        print("\(sum)")
+        return sum
     }
     
-    public static func part2() {
+    public static func part2() -> Int{
         let text = Bundle.main.getInput(file: "input_day3")?.trimmingCharacters(in: .whitespaces)
         let matchesDo = text!.split(separator: "do()")
         
@@ -33,6 +33,6 @@ public struct Day3 {
         }
         .reduce(0, +)
             
-        print("\(sum)")
+        return sum
     }
 }

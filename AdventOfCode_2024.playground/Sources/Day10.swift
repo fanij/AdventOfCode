@@ -2,7 +2,7 @@ import Foundation
 
 public struct Day10 {
     
-    public static func part1() {
+    public static func part1() -> Int {
         let text = Bundle.main.getInput(file: "input_day10")?.trimmingCharacters(in: .whitespaces)
         let lines = text!.split(separator: "\n")
             .map{ String($0).split(separator: "").map({ Int($0)! }) }
@@ -42,10 +42,10 @@ public struct Day10 {
             return value.count
         }.reduce(0, +)
         
-        print(result)
+        return result
     }
     
-    public static func part2() {
+    public static func part2() -> Int {
         let text = Bundle.main.getInput(file: "input_day10")?.trimmingCharacters(in: .whitespaces)
         let lines = text!.split(separator: "\n")
             .map{ String($0).split(separator: "").map({ Int($0)! }) }
@@ -89,7 +89,7 @@ public struct Day10 {
             return value
         }.reduce(0, +)
         
-        print(result)
+        return result
     }
     
     static func move(point:Point, lines:[[Int]]) -> [Point] {
@@ -110,38 +110,5 @@ public struct Day10 {
             }
         }
         return points
-    }
-}
-
-extension Day10{
-    class Point: NSObject, NSCopying {
-        var x:Int
-        var y:Int
-        
-        init(x: Int, y: Int) {
-            self.x = x
-            self.y = y
-        }
-        
-        override func isEqual(_ object: Any?) -> Bool {
-            if let other = object as? Point {
-                return self.x == other.x && self.y == other.y
-            } else {
-                return false
-            }
-        }
-        
-        override var hash: Int {
-            return "\(self.x) - \(self.y)".hashValue
-        }
-        
-        func copy(with zone: NSZone? = nil) -> Any {
-            let copy = Point(x: x, y: y)
-            return copy
-        }
-        
-        override var description : String {
-            return "(\(x),\(y))"
-        }
     }
 }

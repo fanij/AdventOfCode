@@ -2,20 +2,20 @@ import Foundation
 
 public struct Day6 {
     
-    public static func part1() {
+    public static func part1() -> Int{
         let text = Bundle.main.getInput(file: "input_day6")?.trimmingCharacters(in: .whitespaces)
         let lines = text!.split(separator: "\n").map{ Array($0) }
         
-        var guardLoc:Point?
-        var obstacles = Set<Point>()
+        var guardLoc:PointExtended?
+        var obstacles = Set<PointExtended>()
         
         for (x, line) in lines.enumerated(){
             for (y, char) in line.enumerated(){
                 if char == "^"{
-                    guardLoc = Point(x: x, y: y, direction: .up, maxX: lines.count, maxY: line.count)
+                    guardLoc = PointExtended(x: x, y: y, direction: .up, maxX: lines.count, maxY: line.count)
                 }
                 else if char == "#"{
-                    obstacles.insert(Point(x: x, y: y))
+                    obstacles.insert(PointExtended(x: x, y: y))
                 }
             }
             guardLoc?.obstacles = obstacles
@@ -31,23 +31,23 @@ public struct Day6 {
             }
         }
         
-        print(guardLoc?.visited.count ?? 0)
+        return guardLoc?.visited.count ?? 0
     }
     
-    public static func part2() {
+    public static func part2() -> Int{
         let text = Bundle.main.getInput(file: "input_day6")?.trimmingCharacters(in: .whitespaces)
         let lines = text!.split(separator: "\n").map{ Array($0) }
         
-        var guardLoc:Point?
-        var obstacles = Set<Point>()
+        var guardLoc:PointExtended?
+        var obstacles = Set<PointExtended>()
         
         for (x, line) in lines.enumerated(){
             for (y, char) in line.enumerated(){
                 if char == "^"{
-                    guardLoc = Point(x: x, y: y, direction: .up, maxX: lines.count, maxY: line.count)
+                    guardLoc = PointExtended(x: x, y: y, direction: .up, maxX: lines.count, maxY: line.count)
                 }
                 else if char == "#"{
-                    obstacles.insert(Point(x: x, y: y))
+                    obstacles.insert(PointExtended(x: x, y: y))
                 }
             }
             guardLoc?.obstacles = obstacles
@@ -58,12 +58,12 @@ public struct Day6 {
         if let guardLoc = guardLoc {
             for (x, line) in lines.enumerated(){
                 for (y, _) in line.enumerated(){
-                    let point = Point(x: x, y: y)
+                    let point = PointExtended(x: x, y: y)
                     
                     if !obstacles.contains(point) && !(point.x == guardLoc.x && point.y == guardLoc.y){
                         if obstacles.map({ $0.x == x }).count > 0 || obstacles.map({ $0.y == y }).count > 0 {
                             
-                            let guardC = guardLoc.copy() as! Day6.Point
+                            let guardC = guardLoc.copy() as! PointExtended
                             guardC.obstacles.insert(point)
                             
                             var moved = true
@@ -83,7 +83,7 @@ public struct Day6 {
                                         continue
                                     }
                                     
-                                    point.visited.insert(Point(x: guardC.x, y: guardC.y, direction: guardC.direction))
+                                    point.visited.insert(PointExtended(x: guardC.x, y: guardC.y, direction: guardC.direction))
                                     guardC.directionChange()
                                     moved = true
                                 }
@@ -94,7 +94,7 @@ public struct Day6 {
             }
         }
         
-        print(loops)
+        return loops
     }
 }
 
@@ -120,34 +120,19 @@ extension Day6{
         }
     }
     
-    class Point: NSObject, NSCopying{
-        var x:Int
-        var y:Int
+    class PointExtended: Point{
         
         var direction: Direction?
         var maxX:Int
         var maxY:Int
-        var obstacles = Set<Point>()
-        var visited = Set<Point>()
+        var obstacles = Set<PointExtended>()
+        var visited = Set<PointExtended>()
         
         init(x: Int, y: Int, direction:Direction? = nil, maxX:Int = 0, maxY:Int = 0) {
-            self.x = x
-            self.y = y
             self.direction = direction
             self.maxX = maxX
             self.maxY = maxY
-        }
-        
-        override func isEqual(_ object: Any?) -> Bool {
-            if let other = object as? Point {
-                return self.x == other.x && self.y == other.y
-            } else {
-                return false
-            }
-        }
-        
-        override var hash: Int {
-            return "\(self.x) - \(self.y)".hashValue
+            super.init(x: x, y: y)
         }
         
         func directionChange(){
@@ -163,7 +148,7 @@ extension Day6{
         }
         
         func move() -> (Bool, Bool){
-            let temp = Point(x:self.x, y:self.y)
+            let temp = PointExtended(x:self.x, y:self.y)
             if let direction = direction{
                 switch direction {
                 case .up:
@@ -187,13 +172,13 @@ extension Day6{
             else{
                 self.x = temp.x
                 self.y = temp.y
-                visited.insert(Point(x: self.x, y: self.y, direction: self.direction))
+                visited.insert(PointExtended(x: self.x, y: self.y, direction: self.direction))
                 return (true, false)
             }
         }
         
-        func copy(with zone: NSZone? = nil) -> Any {
-            let copy = Point(x: x, y: y, direction: direction, maxX: maxX, maxY: maxY)
+        override func copy(with zone: NSZone? = nil) -> Any {
+            let copy = PointExtended(x: x, y: y, direction: direction, maxX: maxX, maxY: maxY)
             copy.obstacles = obstacles
             return copy
         }

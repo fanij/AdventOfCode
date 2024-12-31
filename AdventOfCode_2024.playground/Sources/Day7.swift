@@ -9,7 +9,7 @@ public struct Day7 {
         var calculated: Int = 0
     }
     
-    public static func part1() {
+    public static func part1() -> Int {
         let text = Bundle.main.getInput(file: "input_day7")?.trimmingCharacters(in: .whitespaces)
         let lines = text!.split(separator: "\n").map{ String($0) }
         
@@ -24,10 +24,10 @@ public struct Day7 {
             }
         }
         
-        print(sum)
+        return sum
     }
     
-    public static func part2() {
+    public static func part2() -> Int {
         let text = Bundle.main.getInput(file: "input_day7")?.trimmingCharacters(in: .whitespaces)
         let lines = text!.split(separator: "\n").map{ String($0) }
         
@@ -43,7 +43,7 @@ public struct Day7 {
             }
         }
         
-        print(sum)
+        return sum
     }
     
     static func correctEquation(root: Node) -> Bool {

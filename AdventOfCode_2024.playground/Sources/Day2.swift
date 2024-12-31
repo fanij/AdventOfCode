@@ -2,7 +2,7 @@ import Foundation
 
 public struct Day2 {
 
-    public static func part1() {
+    public static func part1() -> Int{
         let text = Bundle.main.getInput(file: "input_day2")?.trimmingCharacters(in: .whitespaces)
         let values = text?.split(separator: "\n")
             .map{
@@ -18,10 +18,10 @@ public struct Day2 {
             }
         }
             
-        print("\(valid)")
+        return valid
     }
     
-    public static func part2() {
+    public static func part2() -> Int{
         let text = Bundle.main.getInput(file: "input_day2")?.trimmingCharacters(in: .whitespaces)
         let values = text?.split(separator: "\n")
             .map{
@@ -61,7 +61,7 @@ public struct Day2 {
             }
         }
             
-        print("\(valid)")
+        return valid
     }
     
     static func isValidLevel(diff:Int, sign:Int) -> Bool{

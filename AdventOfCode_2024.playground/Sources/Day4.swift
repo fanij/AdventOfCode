@@ -2,7 +2,7 @@ import Foundation
 
 public struct Day4 {
 
-    public static func part1() {
+    public static func part1() -> Int{
         let text = Bundle.main.getInput(file: "input_day4")?.trimmingCharacters(in: .whitespaces)
         let lines = text!.split(separator: "\n")
         
@@ -25,7 +25,7 @@ public struct Day4 {
         let diagonalL = findVertical(lines: diagonalLeft)
         let diagonalR = findVertical(lines: diagonalRight)
         
-        print("\(horizontal + vertical + diagonalL + diagonalR)")
+        return horizontal + vertical + diagonalL + diagonalR
     }
     
     static func findVertical(lines:[String]) -> Int{
@@ -40,7 +40,7 @@ public struct Day4 {
         return vertical
     }
     
-    public static func part2() {
+    public static func part2() -> Int{
         let text = Bundle.main.getInput(file: "input_day4")?.trimmingCharacters(in: .whitespaces)
         let lines = text!.split(separator: "\n").map{ Array($0) }
         
@@ -78,6 +78,6 @@ public struct Day4 {
             }
         }
         
-        print(counter)
+        return counter
     }
 }
