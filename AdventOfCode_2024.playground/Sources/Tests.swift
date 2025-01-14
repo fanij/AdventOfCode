@@ -56,4 +56,8 @@ public class AdventOfCodeTests: XCTestCase {
         XCTAssertEqual(Day11.part1(), 55312)
         XCTAssertEqual(Day11.part2(), 65601038650482)
     }
+    
+    func testDay12() {
+        XCTAssertEqual(Day12.part1(), 1930)
+    }
 }
